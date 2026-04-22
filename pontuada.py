@@ -1,12 +1,11 @@
 import os
 
-os.system("cls||clear1")
 
-# Vetores
+def limpar_tela():
+    os.system("cls||clear")
+
 avioes = [0] * 4
 assentos = [0] * 4
-
-# Lista de reservas
 reservas = []
 LIMITE_RESERVAS = 20
 
@@ -22,6 +21,7 @@ def menu():
 
 
 while True:
+    limpar_tela()
     menu()
     opcao = int(input("Escolha uma opção: "))
 
@@ -33,15 +33,15 @@ while True:
     
     elif opcao == 2:
         for i in range(4):
-            assentos[i] = int(input(f"Assentos disponíveis para avião {avioes[i]}: "))
+            assentos[i] = int(input(f"Assentos do avião {avioes[i]}: "))
 
-    #Reserva
+    
     elif opcao == 3:
         if len(reservas) >= LIMITE_RESERVAS:
             print("Limite de reservas atingido!")
             continue
 
-        numero = int(input("Digite o número do avião: "))
+        numero = int(input("Número do avião: "))
 
         if numero not in avioes:
             print("Este avião não existe!")
@@ -53,7 +53,7 @@ while True:
             print("Não há assentos disponíveis para este avião!")
             continue
 
-        nome = input("Digite o nome do passageiro: ")
+        nome = input("Nome do passageiro: ")
 
         reservas.append({
             "numero_aviao": numero,
@@ -63,15 +63,16 @@ while True:
         assentos[indice] -= 1
         print("Reserva realizada com sucesso!")
 
-    # Opção 4 - Consulta por avião
+    
     elif opcao == 4:
-        numero = int(input("Digite o número do avião: "))
+        numero = int(input("Número do avião: "))
 
         if numero not in avioes:
             print("Este avião não existe!")
             continue
 
         encontrou = False
+
         for r in reservas:
             if r["numero_aviao"] == numero:
                 print("Passageiro:", r["nome_passageiro"])
@@ -80,20 +81,16 @@ while True:
         if not encontrou:
             print("Não há reservas realizadas para este avião!")
 
-    # Opção 5 - Consulta por passageiro
     elif opcao == 5:
-        nome = input("Digite o nome do passageiro: ")
+        nome = input("Nome do passageiro: ").lower()
 
-        encontrou = False
         for r in reservas:
-            if r["nome_passageiro"].lower() == nome.lower():
+            if r["nome_passageiro"].lower() == nome:
                 print("Avião:", r["numero_aviao"])
-                encontrou = True
-
-        if not encontrou:
+                break
+        else:
             print("Não há reservas realizadas para este passageiro!")
 
-    # Opção 6 - Sair
     elif opcao == 6:
         print("Encerrando sistema...")
         break
